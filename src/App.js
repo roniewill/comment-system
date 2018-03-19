@@ -11,28 +11,17 @@ class App extends Component {
     this.postNewComment = this.postNewComment.bind(this);
 
     this.state = {
-      comments: {
-        '1': {
-          'title': 'This a new comment',
-          'comment': "I dont like comment here, I don't want!"
-        },
-        '2': {
-          'title': 'II This a new comment',
-          'comment': "I dont like comment here, I don't want!"
-        },
-        '3': {
-          'title': 'III This a new comment',
-          'comment': "I dont like comment here, I don't want!"
-        }
-      }
+      comments: {}
     }
   }
 
   postNewComment(comment) {
+    const comments = { ...this.state.comments }
+    const timestamp = Date.now();
+    comments[`comm-${timestamp}`] = comment;
+
     this.setState({
-      comments: {
-        ...this.state.comments, comment
-      }
+      comments: comments
     });
   }
 

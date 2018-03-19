@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
 
+import Comment from './Comment';
+
 class Comments extends Component {
+
+	renderComments(key, comment) {
+		return (
+			<Comment key={ key } comment={ comment } />
+		)
+	}
+
 	render(){
 		return (
 			<div className="row">
@@ -9,16 +18,7 @@ class Comments extends Component {
 					
 					<hr />
 
-					<div className="media mt-3">
-
-					  <div className="media-body">
-					    <h5 className="mt-0">Media heading</h5>
-					    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-					  </div>
-
-					</div>
-
-					{JSON.stringify(this.props.comments)}
+					 { Object.keys(this.props.comments).map( key => this.renderComments(key, this.props.comments[key] ) ) }
 
 				</div>
 

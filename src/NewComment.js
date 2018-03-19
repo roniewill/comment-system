@@ -1,25 +1,25 @@
 import React, { Component } from 'react';
-import { 
-	Button,
-	Form, 
-	FormGroup, 
-	Label, 
-	Input } from 'reactstrap';
+
 
 class NewComment extends Component {
 	constructor(props){
 		super(props);
 
-		this.handleEnter = this.handleEnter.bind(this);
+		this.sendData = this.sendData.bind(this);
 	}
 
-	handleEnter( event ){
-		if(event.keyCode===13){
-			this.props.postNewComment({
-				'title': 'Other new comment',
-				'comment': 'This is an test comment'
-			});
-		}
+	sendData( event ){
+		
+		this.props.postNewComment({
+			'title': this.refs.titlecomment.value,
+			'comment': this.refs.yourcomment.value
+		});
+
+		console.log(this.refs.titlecomment.value + ' \n ' + this.refs.yourcomment.value);
+		
+
+		this.refs.titlecomment.value = "";
+		this.refs.yourcomment.value = "";
 	}
 
 	render() {
@@ -28,15 +28,20 @@ class NewComment extends Component {
 
 				<div className="col-sm-12 col-md-8 col-4">
 
-					<Form className="my-3">
+					<form>
 
-						 <FormGroup>
-				          <Label for="exampleText">Write your comment:</Label>
-				          <Input type="textarea" name="yourcomment" onKeyDown={ this.handleEnter } id="yourComment" />
-				        </FormGroup>
-				        <Button>Submit</Button>
+						<div className="form-group">
+							<label>Title:</label>
+							<input className="form-control" ref="titlecomment" id="titlecomment" rows="3" />
+						</div>
 
-					</Form>
+						<div className="form-group">
+							<label>Write your comment:</label>
+							<textarea className="form-control" ref="yourcomment" id="yourcomment" rows="3"></textarea>
+						</div>
+						<input type="button" className="btn btn-primary" value="Send data" onClick={ this.sendData } />
+
+					</form>
 
 				</div>
 
