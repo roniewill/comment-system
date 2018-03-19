@@ -1,20 +1,14 @@
 import React, { Component } from 'react';
 
-class Comment extends Component {
+const Comment = props => 
+		<div className="media mt-3">
 
-	render() {
-		return(
-
-			<div className="media mt-3">
-
-				<div className="media-body">
-				    <h4 className="mt-1">{ this.props.comment.title }</h4>
-				    <p>{ this.props.comment.comment }</p>
-				</div>
-
+			<div className="media-body">
+			    <h4 className="mt-1">{ props.comment.title }</h4>
+			    <p>{ props.comment.comment }</p>
 			</div>
-		);
-	}
-}
+
+		</div>
+
 
 export default Comment;
