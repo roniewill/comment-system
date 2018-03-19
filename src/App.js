@@ -4,6 +4,8 @@ import MainNavBar from './MainNavBar';
 import NewComment from './NewComment';
 import Comments from './Comments';
 
+import base from './Base';
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -13,6 +15,12 @@ class App extends Component {
     this.state = {
       comments: {}
     }
+
+    this.refComments = base.syncState('comments', {
+      context: this,
+      state: 'comments'
+    });
+
   }
 
   postNewComment(comment) {

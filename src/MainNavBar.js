@@ -29,7 +29,7 @@ class MainNavBar extends Component {
   }
   render() {
     return (
-      <Navbar color="faded" light expand="md">
+      <Navbar color="faded" light expand="md" className="mb-5">
         <div className="container">
           <NavbarBrand href="/"><FaComment /> Comments Systems</NavbarBrand>
             <NavbarToggler onClick={this.toggle} />
