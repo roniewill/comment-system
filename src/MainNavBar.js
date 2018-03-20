@@ -1,64 +1,52 @@
 import React, { Component }from 'react';
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem } from 'reactstrap';
 import FaComment from 'react-icons/lib/md/comment';
 
 class MainNavBar extends Component {
-  constructor(props) {
-    super(props);
 
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      isOpen: false
-    };
-  }
-  toggle() {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  }
   render() {
     return (
-      <Navbar color="faded" light expand="md" className="mb-5">
+
+      <nav className="navbar navbar-expand-lg navbar-dark bg-primary fixed-top mb-5">
+      
         <div className="container">
-          <NavbarBrand href="/"><FaComment /> Comments Systems</NavbarBrand>
-            <NavbarToggler onClick={this.toggle} />
-            <Collapse isOpen={this.state.isOpen} navbar>
-              <Nav className="ml-auto" navbar>
-                <NavItem>
-                  <NavLink href="#">Comments</NavLink>
-                </NavItem>
-                <UncontrolledDropdown nav inNavbar>
-                  <DropdownToggle nav caret>
-                    Account
-                  </DropdownToggle>
-                  <DropdownMenu >
-                    <DropdownItem>
-                      Log In
-                    </DropdownItem>
-                    <DropdownItem>
-                      Log Out
-                    </DropdownItem>
-                    <DropdownItem divider />
-                    <DropdownItem>
-                      Profile
-                    </DropdownItem>
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-              </Nav>
-            </Collapse>
+      
+          <a className="navbar-brand" href="/"><FaComment /> Comments Systems</a>
+
+          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSite">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+
+          <div className="collapse navbar-collapse" id="navbarSite">
+            
+            <ul className="navbar-nav mr-auto">
+              
+              <li className="nav-item">
+                <a href="/" className="nav-link">Home</a>
+              </li>
+              <li className="nav-item">
+                <a href="" className="nav-link">Comments</a>
+              </li>
+
+            </ul>
+
+            <ul className="navbar-nav ml-auto">
+              <li className="nav-item dropdown">
+                <a href="#" className="nav-link dropdown-toggle" data-toggle="dropdown" id="navDrop">Account</a>
+
+                <div className="dropdown-menu mb-2">
+                  <a href="" className="dropdown-item">Login</a>
+                  <a href="" className="dropdown-item">Logout</a>
+                  <a href="" className="dropdown-item">Profile</a>
+                </div>
+              </li>
+            </ul>
+
+          </div>
+
         </div>
-      </Navbar>
+
+      </nav>
+
     );
   }
 }
