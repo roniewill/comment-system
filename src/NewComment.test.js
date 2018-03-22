@@ -7,11 +7,20 @@ import NewComment from './NewComment';
 
 describe('<NewComment />', () => {
 
-	const base = { syncState: jest.fn() }
+	const postNewCommentMock =  jest.fn();
 	
 	it('renders without crashing', () => {
-		const wrapper = shallow(<NewComment base={ base } />);
+		const wrapper = shallow(<NewComment postNewComment={ postNewCommentMock } />);
 		expect(wrapper.length).toBe(1);
+	});
+
+	it('posting new comment', () => {
+		const wrapper = mount(<NewComment postNewComment={ postNewCommentMock } />);
+		const eventMock = {
+			preventDefault: jest.fn()
+		}
+		wrapper.instance().sendData(eventMock);
+		//expect(wrapper.length).toBe(1);
 	});
 
 });

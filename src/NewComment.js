@@ -15,10 +15,12 @@ class NewComment extends Component {
 			'comment': this.refs.yourcomment.value
 		});
 
-		console.log(this.refs.titlecomment.value + ' \n ' + this.refs.yourcomment.value);
+		//console.log(this.refs.titlecomment.value + ' \n ' + this.refs.yourcomment.value);
 		
 		this.refs.titlecomment.value = "";
 		this.refs.yourcomment.value = "";
+
+		event.preventDefault();
 	}
 
 	render() {
