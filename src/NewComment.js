@@ -17,7 +17,6 @@ class NewComment extends Component {
 
 		console.log(this.refs.titlecomment.value + ' \n ' + this.refs.yourcomment.value);
 		
-
 		this.refs.titlecomment.value = "";
 		this.refs.yourcomment.value = "";
 	}
