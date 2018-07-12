@@ -10,5 +10,7 @@ describe('<Comment />', () => {
 	it('renders without crashing', () => {
 		const wrapper = shallow(<Comment comment={comment} />);
 		expect(wrapper.length).toBe(1);
+		expect(wrapper.is('.media')).toBe(true);
+		expect(wrapper.text()).toBe(comment.comment);
 	});
 });
