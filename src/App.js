@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import MainNavBar from './MainNavBar';
-import NewComment from './NewComment';
-import Comments from './Comments';
+import MainNavBar from "./MainNavBar";
+import NewComment from "./NewComment";
+import Comments from "./Comments";
+import Login from "./Login";
 
 class App extends Component {
   constructor(props) {
@@ -11,18 +12,33 @@ class App extends Component {
     this.postNewComment = this.postNewComment.bind(this);
 
     this.state = {
-      comments: {}
-    }
+      comments: {},
+      isAuth: false,
+      authError: "",
+      isAuthError: false
+    };
 
-    this.refComments = this.props.base.syncState('comments', {
+    this.refComments = this.props.base.syncState("comments", {
       context: this,
-      state: 'comments'
+      state: "comments"
     });
+  }
 
+  componentDidMount(){
+    const { auth } = this.props;
+
+    auth.onAuthStateChanged( user => {
+      if(user){
+        this.setState({
+          isAuth: true,
+          user
+        });
+      }
+    });
   }
 
   postNewComment(comment) {
-    const comments = { ...this.state.comments }
+    const comments = { ...this.state.comments };
     const timestamp = Date.now();
     comments[`comm-${timestamp}`] = comment;
 
@@ -31,19 +47,36 @@ class App extends Component {
     });
   }
 
+  login = async (email, passwd) => {
+    const { auth } = this.props;
+    this.setState({
+      authError: "",
+      isAuthError: false
+    });
+    try {
+      await auth.signInWithEmailAndPassword(email, passwd);
+    } catch (error) {
+      this.setState({
+        authError: error.code,
+        isAuthError: true
+      });
+    }
+  };
+
   render() {
     return (
       <div>
         <MainNavBar />
-        
+
         <div className="container">
-          
-          <NewComment postNewComment={ this.postNewComment }/>
-          
-          <Comments comments={ this.state.comments }/>
+          {!this.state.isAuth && <Login login={this.login} />}
 
+          {this.state.isAuth && (
+            <NewComment postNewComment={this.postNewComment} />
+          )}
+
+          <Comments comments={this.state.comments} />
         </div>
-
       </div>
     );
   }

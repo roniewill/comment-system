@@ -1,9 +1,10 @@
 import Rebase from 're-base';
 import firebase from 'firebase/app';
 import 'firebase/database';
+import 'firebase/auth';
 
-var app = firebase.initializeApp({
-  	apiKey: "AIzaSyDlQ3Bdnrh_6F2gZfshfINlH8ItZWO4LBU",
+const app = firebase.initializeApp({
+  apiKey: "AIzaSyDlQ3Bdnrh_6F2gZfshfINlH8ItZWO4LBU",
 	authDomain: "reactjs-comments-system.firebaseapp.com",
 	databaseURL: "https://reactjs-comments-system.firebaseio.com",
 	projectId: "reactjs-comments-system",
@@ -11,8 +12,6 @@ var app = firebase.initializeApp({
 	messagingSenderId: "970567645087"
 });
 
-var db = firebase.database(app);
-var base = Rebase.createClass(db);
-
-
-export default base;
+const db = firebase.database(app);
+export const base = Rebase.createClass(db);
+export const auth = firebase.auth();
