@@ -4,7 +4,7 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { base, auth } from './Base';
 
-import 'bootstrap/dist/css/bootstrap.css';
+import '../node_modules/bootstrap/dist/css/bootstrap.css';
 
 ReactDOM.render(<App base={ base } auth={ auth } />, document.getElementById('root'));
 registerServiceWorker();

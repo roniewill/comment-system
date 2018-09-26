@@ -29,7 +29,7 @@ class NewComment extends Component {
 
 				<div className="col-sm-12 col-md-8 col-4">
 
-					<form style={{ marginTop: 5 + 'rem' }}>
+					<form style={{ marginTop: 3 + 'rem' }}>
 
 						<div className="form-group">
 							<label>Title:</label>

@@ -1,9 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 
 import MainNavBar from "./MainNavBar";
 import NewComment from "./NewComment";
 import Comments from "./Comments";
 import Login from "./Login";
+import User from './User';
 
 class App extends Component {
   constructor(props) {
@@ -15,7 +16,8 @@ class App extends Component {
       comments: {},
       isAuth: false,
       authError: "",
-      isAuthError: false
+      isAuthError: false,
+      user: {}
     };
 
     this.refComments = this.props.base.syncState("comments", {
@@ -33,6 +35,11 @@ class App extends Component {
           isAuth: true,
           user
         });
+      }else{
+        this.setState({
+          isAuth: false,
+          user: {}
+        });
       }
     });
   }
@@ -40,7 +47,11 @@ class App extends Component {
   postNewComment(comment) {
     const comments = { ...this.state.comments };
     const timestamp = Date.now();
-    comments[`comm-${timestamp}`] = comment;
+    comments[`comm-${timestamp}`] = {
+      comment,
+      email: this.state.user.email,
+      uid: this.state.user.uid
+    };
 
     this.setState({
       comments: comments
@@ -63,21 +74,24 @@ class App extends Component {
     }
   };
 
-  render() {
-    return (
-      <div>
-        <MainNavBar />
+  logout = () => {
+    const { auth } = this.props;
+    auth.signOut();
+  }
 
+  render() {
+    const {user} = this.state;
+    //console.log(user);
+    return (
+      <Fragment>
+        <MainNavBar />
         <div className="container">
           {!this.state.isAuth && <Login login={this.login} />}
-
-          {this.state.isAuth && (
-            <NewComment postNewComment={this.postNewComment} />
-          )}
-
+          {this.state.isAuth && <User email={user.email} logout={this.logout} />}
+          {this.state.isAuth && <NewComment postNewComment={this.postNewComment} />}
           <Comments comments={this.state.comments} />
         </div>
-      </div>
+      </Fragment>
     );
   }
 }
