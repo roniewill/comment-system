@@ -44,14 +44,11 @@ class App extends Component {
     });
   }
 
-  postNewComment(comment) {
+  postNewComment = comment => {
     const comments = { ...this.state.comments };
+    const { user } = this.state;
     const timestamp = Date.now();
-    comments[`comm-${timestamp}`] = {
-      comment,
-      email: this.state.user.email,
-      uid: this.state.user.uid
-    };
+    comments[`comm-${timestamp}`] = comment;
 
     this.setState({
       comments: comments
@@ -88,7 +85,7 @@ class App extends Component {
         <div className="container">
           {!this.state.isAuth && <Login login={this.login} />}
           {this.state.isAuth && <User email={user.email} logout={this.logout} />}
-          {this.state.isAuth && <NewComment postNewComment={this.postNewComment} />}
+          {this.state.isAuth && <NewComment postNewComment={this.postNewComment} user={user}/>}
           <Comments comments={this.state.comments} />
         </div>
       </Fragment>

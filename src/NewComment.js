@@ -9,13 +9,13 @@ class NewComment extends Component {
 	}
 
 	sendData( event ){
-		
+		const { user } = this.props;
 		this.props.postNewComment({
 			'title': this.refs.titlecomment.value,
-			'comment': this.refs.yourcomment.value
+			'comment': this.refs.yourcomment.value,
+			'email': user.email,
+			'uid': user.uid
 		});
-
-		//console.log(this.refs.titlecomment.value + ' \n ' + this.refs.yourcomment.value);
 		
 		this.refs.titlecomment.value = "";
 		this.refs.yourcomment.value = "";
