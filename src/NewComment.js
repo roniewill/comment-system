@@ -8,7 +8,7 @@ class NewComment extends Component {
 		this.sendData = this.sendData.bind(this);
 	}
 
-	sendData( event ){
+	sendData =  event => {
 		const { user } = this.props;
 		this.props.postNewComment({
 			'title': this.refs.titlecomment.value,

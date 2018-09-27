@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class Login extends Component {
+class SignUp extends Component {
   state = {
     email: "",
     passwd: ""
@@ -12,22 +12,22 @@ class Login extends Component {
     });
   };
 
-  login = event => {
-    this.props.login(this.state.email, this.state.passwd);
+  saveAccount = event => {
+    this.props.createAccount(this.state.email, this.state.passwd);
     event.preventDefault();
   };
 
   render() {
-    const { isAuthError, authError, screenMode } = this.props;
+    const { isSignUpError, signUpError, screenMode } = this.props;
     const errorMessages = {
-      "auth/wrong-password": "E-mail or Password invalid",
       "auth/invalid-email": "Invalid E-mail",
-      "auth/user-not-found": "User not found"
+      "auth/email-already-in-use": "This email already in use",
+      "auth/weak-password": "Weak password"
     };
     return (
       <div className="row mt-5">
         <div className="col-sm-12 col-10 mt-3">
-          <h1>Login</h1>
+          <h1>New Account</h1>
           <form className="form-inline">
             <div className="form-group mb-2">
               <input
@@ -48,23 +48,23 @@ class Login extends Component {
             <button
               type="submit"
               className="btn btn-primary mb-2"
-              onClick={this.login}
+              onClick={this.saveAccount}
             >
-              LogIn
+              Save
             </button>
           </form>
-          Don't have an account?
+          You have an account?
           <button
             type="button"
             className="btn btn-link"
-            onClick={() => screenMode("signup")}
+            onClick={() => screenMode("login")}
           >
             Click Here
           </button>
-          {isAuthError && (
+          {isSignUpError && (
             <div className="alert alert-danger" role="alert">
               <strong>Error: </strong>
-              {errorMessages[authError]}
+              {errorMessages[signUpError]}
             </div>
           )}
         </div>
@@ -73,4 +73,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default SignUp;

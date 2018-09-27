@@ -4,7 +4,8 @@ import MainNavBar from "./MainNavBar";
 import NewComment from "./NewComment";
 import Comments from "./Comments";
 import Login from "./Login";
-import User from './User';
+import User from "./User";
+import SingUp from "./SingUp";
 
 class App extends Component {
   constructor(props) {
@@ -17,7 +18,10 @@ class App extends Component {
       isAuth: false,
       authError: "",
       isAuthError: false,
-      user: {}
+      signUpError: "",
+      isSignUpError: false,
+      user: {},
+      screenMode: "login"
     };
 
     this.refComments = this.props.base.syncState("comments", {
@@ -26,16 +30,16 @@ class App extends Component {
     });
   }
 
-  componentDidMount(){
+  componentDidMount() {
     const { auth } = this.props;
 
-    auth.onAuthStateChanged( user => {
-      if(user){
+    auth.onAuthStateChanged(user => {
+      if (user) {
         this.setState({
           isAuth: true,
           user
         });
-      }else{
+      } else {
         this.setState({
           isAuth: false,
           user: {}
@@ -46,14 +50,12 @@ class App extends Component {
 
   postNewComment = comment => {
     const comments = { ...this.state.comments };
-    const { user } = this.state;
     const timestamp = Date.now();
     comments[`comm-${timestamp}`] = comment;
-
     this.setState({
       comments: comments
     });
-  }
+  };
 
   login = async (email, passwd) => {
     const { auth } = this.props;
@@ -71,22 +73,67 @@ class App extends Component {
     }
   };
 
+  createAccount = async (email, passwd) => {
+    const { auth } = this.props;
+    this.setState({
+      signUpError: "",
+      isSignUpError: false
+    });
+    try {
+      await auth.createUserWithEmailAndPassword(email, passwd);
+    } catch (error) {
+      this.setState({
+        signUpError: error.code,
+        isSignUpError: true
+      });
+    }
+  };
+
   logout = () => {
     const { auth } = this.props;
     auth.signOut();
-  }
+  };
+
+  changeScreen = screenMode => this.setState({ screenMode });
 
   render() {
-    const {user, isAuthError, authError} = this.state;
+    const {
+      user,
+      isAuth,
+      screenMode,
+      isAuthError,
+      authError,
+      signUpError,
+      isSignUpError,
+      comments
+    } = this.state;
     //console.log(user);
     return (
       <Fragment>
         <MainNavBar />
         <div className="container">
-          {!this.state.isAuth && <Login login={this.login} isAuthError={isAuthError} authError={authError}/>}
-          {this.state.isAuth && <User email={user.email} logout={this.logout} />}
-          {this.state.isAuth && <NewComment postNewComment={this.postNewComment} user={user}/>}
-          <Comments comments={this.state.comments} />
+          {!isAuth &&
+            screenMode === "login" && (
+              <Login
+                login={this.login}
+                isAuthError={isAuthError}
+                authError={authError}
+                screenMode={this.changeScreen}
+              />
+            )}
+          {!isAuth && screenMode === "signup" && (
+            <SingUp
+              createAccount={this.createAccount}
+              signUpError={signUpError}
+              isSignUpError={isSignUpError}
+              screenMode={this.changeScreen}
+            />
+          )}
+          {isAuth && <User email={user.email} logout={this.logout} />}
+          {isAuth && (
+            <NewComment postNewComment={this.postNewComment} user={user} />
+          )}
+          <Comments comments={comments} />
         </div>
       </Fragment>
     );
