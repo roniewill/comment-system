@@ -12,8 +12,6 @@ class Comments extends Component {
     return (
       <div className="row">
         <div className="col-sm-12 col-10">
-          <hr />
-
           {Object.keys(comments).map(key =>
             this.renderComments(key, comments[key])
           )}
