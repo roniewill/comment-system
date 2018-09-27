@@ -77,13 +77,13 @@ class App extends Component {
   }
 
   render() {
-    const {user} = this.state;
+    const {user, isAuthError, authError} = this.state;
     //console.log(user);
     return (
       <Fragment>
         <MainNavBar />
         <div className="container">
-          {!this.state.isAuth && <Login login={this.login} />}
+          {!this.state.isAuth && <Login login={this.login} isAuthError={isAuthError} authError={authError}/>}
           {this.state.isAuth && <User email={user.email} logout={this.logout} />}
           {this.state.isAuth && <NewComment postNewComment={this.postNewComment} user={user}/>}
           <Comments comments={this.state.comments} />

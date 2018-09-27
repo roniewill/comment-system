@@ -8,13 +8,14 @@ class Comments extends Component {
   }
 
   render() {
+    const { comments } = this.props;
     return (
       <div className="row">
         <div className="col-sm-12 col-10">
           <hr />
 
-          {Object.keys(this.props.comments).map(key =>
-            this.renderComments(key, this.props.comments[key])
+          {Object.keys(comments).map(key =>
+            this.renderComments(key, comments[key])
           )}
         </div>
       </div>
